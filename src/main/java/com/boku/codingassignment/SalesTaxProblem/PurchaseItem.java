@@ -1,17 +1,18 @@
 package com.boku.codingassignment.SalesTaxProblem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PurchaseItem {
 	private String description;
 	private int quantity;
-	private List<ITax> applicableTaxes;
+	private List<Tax> applicableTaxes;
 	private double price;
-	private double salesPrice;
+	private double salesTax;
 	private boolean isImported;
 	private Category category;
 
-	public PurchaseItem(String description, int quantity, double price, boolean isImported, Category category) {
+	protected PurchaseItem(String description, int quantity, double price, boolean isImported, Category category) {
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
@@ -35,11 +36,13 @@ public class PurchaseItem {
 		this.quantity = quantity;
 	}
 
-	public List<ITax> getApplicableTaxes() {
+	public List<Tax> getApplicableTaxes() {
+		if (applicableTaxes == null)
+			applicableTaxes = new ArrayList<>();
 		return applicableTaxes;
 	}
 
-	public void setApplicableTaxes(List<ITax> applicableTaxes) {
+	public void addApplicableTaxes(List<Tax> applicableTaxes) {
 		this.applicableTaxes = applicableTaxes;
 	}
 
@@ -51,12 +54,12 @@ public class PurchaseItem {
 		this.price = price;
 	}
 
-	public double getSalesPrice() {
-		return salesPrice;
+	public double getSalesTax() {
+		return salesTax;
 	}
 
-	public void setSalesPrice(double salesPrice) {
-		this.salesPrice = salesPrice;
+	public void setSalesTax(double salesPrice) {
+		this.salesTax = salesPrice;
 	}
 
 	public boolean isImported() {
@@ -73,6 +76,10 @@ public class PurchaseItem {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public boolean isValid() {
+		return this.quantity > 0 && this.price >= 0 && this.salesTax >= 0 && this.description.length() > 0;
 	}
 
 }

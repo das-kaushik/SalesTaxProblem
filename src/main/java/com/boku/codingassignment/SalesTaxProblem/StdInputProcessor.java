@@ -1,5 +1,6 @@
 package com.boku.codingassignment.SalesTaxProblem;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class StdInputProcessor extends InputProcessor implements IInputProcessor
 	}
 
 	@Override
-	public List<PurchaseItem> parseInput() throws InvalidInputException {
+	public List<PurchaseItem> parseInput() throws InvalidInputException, IOException {
 		if (inputStream != null) {
 			return this.parseInput(inputStream);
 		}

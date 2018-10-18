@@ -2,7 +2,7 @@ package com.boku.codingassignment.SalesTaxProblem;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -13,19 +13,16 @@ public class FileInputProcessor extends InputProcessor implements IInputProcesso
 		this.filePath = filePath;
 	}
 
+	/*
+	 * Passes on the stream to base class InputStreamProcessor where the stream is
+	 * read and parsed. If file is not found, IOException(FileNotFoundException is
+	 * thrown to outer layer from where it is called.)
+	 */
 	@Override
-	public List<PurchaseItem> parseInput() throws InvalidInputException {
+	public List<PurchaseItem> parseInput() throws InvalidInputException, IOException {
 		File file = new File(filePath);
-		InputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		if (inputStream != null) {
-			return this.parseInput(inputStream);
-		}
-		return null;
+		InputStream inputStream = new FileInputStream(file);
+		return this.parseInput(inputStream);
 	}
 
 }

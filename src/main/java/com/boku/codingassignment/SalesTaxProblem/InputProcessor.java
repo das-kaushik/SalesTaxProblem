@@ -11,11 +11,12 @@ public abstract class InputProcessor {
 
 	private static final String SPACE = " ";
 	private static final String IMPORTED = "imported ";
+	private static final String AT = "at";
+	private static final String EMPTY_STRING = "";
 
-	public List<PurchaseItem> parseInput(InputStream inputStream) throws InvalidInputException {
+	public List<PurchaseItem> parseInput(InputStream inputStream) throws InvalidInputException, IOException {
 		List<String> inputs = new ArrayList<>();
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-		System.out.println("Enter the number of inputs");
 		try {
 			int noOfLines = Integer.parseInt(bufferedReader.readLine());
 			while (noOfLines-- > 0) {
@@ -25,13 +26,8 @@ public abstract class InputProcessor {
 			ex.printStackTrace();
 			throw new InvalidInputException();
 		} finally {
-			try {
-				bufferedReader.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				throw new InvalidInputException();
-			}
+			bufferedReader.close();
+			inputStream.close();
 		}
 		List<PurchaseItem> purchaseItems = new ArrayList<>();
 
@@ -41,11 +37,11 @@ public abstract class InputProcessor {
 				String[] inputArr = inputStr.split(SPACE);
 				Integer quantity = Util.tryParseInt(inputArr[0].trim());
 				int index = 1;
-				String productDesc = inputStr.substring(inputStr.indexOf(inputArr[index]), inputStr.lastIndexOf("at"))
+				String productDesc = inputStr.substring(inputStr.indexOf(inputArr[index]), inputStr.lastIndexOf(AT))
 						.trim();
 				boolean isImported = productDesc.contains(IMPORTED);
 				if (isImported) {
-					productDesc = productDesc.replace(IMPORTED, "");
+					productDesc = productDesc.replace(IMPORTED, EMPTY_STRING);
 				}
 				Double price = Util.tryParseDouble(inputArr[inputArr.length - 1]);
 				if (quantity == null || price == null)

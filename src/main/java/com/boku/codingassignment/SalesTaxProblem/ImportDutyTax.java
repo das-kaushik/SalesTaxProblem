@@ -1,6 +1,6 @@
 package com.boku.codingassignment.SalesTaxProblem;
 
-public class ImportDutyTax implements ITax {
+public class ImportDutyTax implements Tax {
 	private double taxPercent;
 
 	public ImportDutyTax(double taxPercent) {
